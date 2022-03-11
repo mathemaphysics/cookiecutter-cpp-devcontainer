@@ -1,0 +1,105 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 16,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "{{ cookiecutter.project_slug }}-release-configure",
+            "displayName": "Unix Makefiles Release",
+            "description": "Release build using Unix Makefiles generator",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "FETCHCONTENT_QUIET": "FALSE",
+                "GIT_PROGRESS": "TRUE",
+                "BUILD_TESTING": "FALSE"
+            }
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-debug-configure",
+            "displayName": "Unix Makefiles Debug",
+            "description": "Debug build using Unix Makefiles generator",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "FETCHCONTENT_QUIET": "FALSE",
+                "GIT_PROGRESS": "TRUE",
+                "BUILD_TESTING": "TRUE"
+            }
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-debug-cov-configure",
+            "displayName": "Unix Makefiles Debug+Coverage",
+            "description": "Debug+Coverage build using Unix Makefiles generator",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "--coverage -fprofile-arcs -ftest-coverage",
+                "FETCHCONTENT_QUIET": "FALSE",
+                "GIT_PROGRESS": "TRUE",
+                "BUILD_TESTING": "TRUE"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-release-build",
+            "displayName": "Unix Makefiles Release Build",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-release-configure"
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-debug-build",
+            "displayName": "Unix Makefiles Debug Build",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-debug-configure"
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-debug-cov-build",
+            "displayName": "Unix Makefiles Debug+Coverage Build",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-debug-cov-configure"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-release-test",
+            "displayName": "Unix Makefiles Release Test",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-release-configure",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-debug-test",
+            "displayName": "Unix Makefiles Debug Test",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-debug-configure",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "{{ cookiecutter.project_slug }}-makefiles-debug-cov-test",
+            "displayName": "Unix Makefiles Debug+Coverage Test",
+            "configurePreset": "{{ cookiecutter.project_slug }}-makefiles-debug-cov-configure",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        }
+    ]
+}
