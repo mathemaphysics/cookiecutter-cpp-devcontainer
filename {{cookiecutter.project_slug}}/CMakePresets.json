@@ -19,7 +19,7 @@
                 "GIT_PROGRESS": "TRUE",
                 "BUILD_TESTING": "TRUE"
             }
-	}
+	} {% if not loop.last %},{% endif %}
 	{%- endfor %}
     ],
     "buildPresets": [
@@ -78,3 +78,4 @@
         }
     ]
 }
+
