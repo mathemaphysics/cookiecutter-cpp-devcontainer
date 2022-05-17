@@ -12,6 +12,8 @@
     "container_xorg_display": ":1",
     "docker_extra_runargs": "",
     "header_only": ["Yes", "No"],
+    "fetch_spdlog": ["Yes", "No"],
+    "fetch_jsoncpp": ["Yes", "No"],
     "github_actions_ci": ["Yes", "No"],
     "gitlab_ci": ["Yes", "No"],
     "readthedocs": ["Yes", "No"],
@@ -21,7 +23,7 @@
     "pypi_release": "{{ cookiecutter.python_bindings }}",
     "codecovio": ["Yes", "No"],
     "sonarcloud": ["No", "Yes"],
-    "_catch_version": "2.13.8",
+    "_googletest_version": "1.11.0",
     "_cibuildwheel_version": "2.3.1",
     "_pybind_version": "2.9.1",
     "_sonarscanner_version": "4.6.2.2472"

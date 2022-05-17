@@ -5,6 +5,7 @@ project({{ cookiecutter.project_slug }} VERSION 0.0.1 LANGUAGES CXX)
 
 # Initialize some default paths
 include(GNUInstallDirs)
+include(FetchContent)
 
 # Define the minimum C++ standard that is required
 set(CMAKE_CXX_STANDARD {{ cookiecutter.cxx_minimum_standard }})
@@ -12,6 +13,33 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 {% if cookiecutter.python_bindings == "Yes" -%}
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+{%- endif %}
+
+# Add GoogleTest at configure time for linking unit tests
+if(BUILD_TESTING)
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        release-1.11.0
+  )
+endif()
+
+{% if cookiecutter.fetch_spdlog == "Yes" -%}
+# Add spdlog at configure time for logging
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG        v1.9.1
+)
+{%- endif %}
+
+{% if cookiecutter.fetch_jsoncpp == "Yes" -%}
+# Add jsoncpp at configure time for configuration input
+FetchContent_Declare(
+  jsoncpp
+  GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+  GIT_TAG        1.9.4		
+)
 {%- endif %}
 
 # Compilation options
@@ -22,9 +50,20 @@ option(BUILD_PYTHON "Enable building of Python bindings" ON)
 option(BUILD_DOCS "Enable building of documentation" ON)
 {%- endif %}
 
+if(BUILD_TESTING)
+# Make GTest::gtest etc. available here
+  FetchContent_MakeAvailable(googletest)
+endif()
+{% if cookiecutter.fetch_spdlog == "Yes" -%}
+FetchContent_MakeAvailable(spdlog)
+{%- endif %}
+{% if cookiecutter.fetch_jsoncpp == "Yes" -%}
+FetchContent_MakeAvailable(jsoncpp)
+{%- endif %}
+
 {%- if cookiecutter.header_only == "No" %}
 
-# compile the library
+# Compile the library
 add_subdirectory(src)
 {% else %}
 # Add an interface target for our header-only library
@@ -35,19 +74,12 @@ target_include_directories({{ cookiecutter.project_slug }} INTERFACE
 )
 {%- endif %}
 
-# compile the application
+# Compile the application
 add_subdirectory(app)
 
-# compile the tests
+# Compile the tests
 include(CTest)
 if(BUILD_TESTING)
-  {%- if cookiecutter.use_submodules == "Yes" %}
-  add_subdirectory(ext/Catch2)
-  include(./ext/Catch2/contrib/Catch.cmake)
-  {%- else %}
-  find_package(Catch2 REQUIRED)
-  include(Catch)
-  {%- endif %}
   add_subdirectory(tests)
 endif()
 
