@@ -9,6 +9,7 @@ target_link_libraries(
 )
 
 # Allow user to run tests with `make test` or `ctest`
+include(GoogleTest)
 gtest_discover_tests(tests)
 add_test(NAME tests COMMAND tests)
 

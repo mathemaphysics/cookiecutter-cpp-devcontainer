@@ -80,6 +80,7 @@ add_subdirectory(app)
 # Compile the tests
 include(CTest)
 if(BUILD_TESTING)
+  include(GoogleTest)
   add_subdirectory(tests)
 endif()
 
