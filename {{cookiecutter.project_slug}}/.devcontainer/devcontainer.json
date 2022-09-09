@@ -57,7 +57,11 @@
 
 	"remoteEnv": {
 	{%- if cookiecutter.container_mount_xorg == "Yes" %}
+	{%- if cookiecutter.os_is_wsl == "Yes" %}
+		"DISPLAY": "host.docker.internal:0.0" // Point to host machine's Xorg
+	{%- else %}
 		"DISPLAY": "{{cookiecutter.container_xorg_display}}"
+	{%- endif %}
 	{%- endif %}
 	},
 
@@ -67,9 +71,11 @@
 		"source=${localEnv:HOME}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
 	{%- endif %}
 	{%- if cookiecutter.container_mount_xorg == "Yes" %}
+	{%- if cookiecutter.os_is_wsl != "Yes" %}
 		// Assumes this is an Ubuntu/Debian image; generalize it
 		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
 		"source=/run/user/1000/gdm/Xauthority,target=/home/devuser/.Xauthority,type=bind"
+	{%- endif %}
 	{%- endif %}
 	]
 }

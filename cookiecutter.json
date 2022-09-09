@@ -5,6 +5,7 @@
     "full_name": "Your Name",
     "license": ["MIT", "BSD-2", "GPL-3.0", "LGPL-3.0", "None"],
     "use_submodules": ["Yes", "No"],
+    "os_is_wsl": ["Yes", "No"],
     "preset_configs": "release|debug|debug-cov",
     "container_image": "ubuntu:focal",
     "container_mount_ssh": ["Yes", "No"],
