@@ -41,7 +41,9 @@
 		"gaborv.flatbuffers",
 		"hbenl.vscode-test-explorer",
 		"novaturion.cpp-classes-creator",
-		"matepek.vscode-catch2-test-adapter"
+		"matepek.vscode-catch2-test-adapter",
+		"Gruntfuggly.todo-tree",
+		"wayou.vscode-todo-highlight"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -65,6 +67,7 @@
 		"source=${localEnv:HOME}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
 	{%- endif %}
 	{%- if cookiecutter.container_mount_xorg == "Yes" %}
+		// Assumes this is an Ubuntu/Debian image; generalize it
 		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
 		"source=/run/user/1000/gdm/Xauthority,target=/home/devuser/.Xauthority,type=bind"
 	{%- endif %}
