@@ -11,6 +11,8 @@
     "container_mount_ssh": ["Yes", "No"],
     "container_mount_xorg": ["Yes", "No"],
     "container_xorg_display": ":1",
+    "docker_in_docker": ["Yes", "No"],
+    "cmake_build_version": "None",
     "docker_extra_runargs": "",
     "header_only": ["Yes", "No"],
     "fetch_spdlog": ["Yes", "No"],

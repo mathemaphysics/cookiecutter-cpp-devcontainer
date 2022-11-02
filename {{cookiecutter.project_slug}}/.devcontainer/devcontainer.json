@@ -70,6 +70,9 @@
 	{%- if cookiecutter.container_mount_ssh == "Yes" %}
 		"source=${localEnv:HOME}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
 	{%- endif %}
+	{%- if cookiecutter.docker_in_docker == "Yes" %}
+		"source=//var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+	{%- endif %}
 	{%- if cookiecutter.container_mount_xorg == "Yes" %}
 	{%- if cookiecutter.os_is_wsl != "Yes" %}
 		// Assumes this is an Ubuntu/Debian image; generalize it
