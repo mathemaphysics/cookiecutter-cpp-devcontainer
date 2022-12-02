@@ -8,6 +8,8 @@
     "os_is_wsl": ["Yes", "No"],
     "preset_configs": "release|debug|debug-cov",
     "container_image": "ubuntu:focal",
+    "additional_apt_packages": "",
+    "additional_python_packages": "",
     "container_mount_ssh": ["Yes", "No"],
     "container_mount_xorg": ["Yes", "No"],
     "container_xorg_display": ":1",

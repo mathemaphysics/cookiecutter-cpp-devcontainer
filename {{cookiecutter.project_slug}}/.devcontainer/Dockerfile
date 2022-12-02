@@ -1,27 +1,19 @@
 FROM {{cookiecutter.container_image}}
 
 ARG DEVUSER devuser
+ARG DEVUID 1000
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update \
  && apt-get -y install --no-install-recommends build-essential \
- 					       g++ \
-					       gdb \
-						   doxygen \
-					       git \
-					       openssh-client \
-						   openssl \
-						   libssl-dev \
-					       wget \
-					       vim \
-					       sudo \
-					       libboost-all-dev \
-					       libopencv-dev \
-					       python3 \
-					       python3-dev \
-					       python3-pip \
-					       python3-numpy \
+    g++ gdb doxygen git openssh-client openssl libssl-dev wget vim sudo \
+    python3 python3-dev python3-pip \
  && python3 -m pip install cookiecutter sphinx breathe sphinx_rtd_theme
+
+{%- if len(cookiecutter.additional_apt_packages.split('|')) > 0 %}
+RUN apt-get -y install --no-install-recommends {{}} # TODO: Finish this
+{%- endif %}
+
 {%- if cookiecutter.cmake_build_version != "None" %}
 WORKDIR /builds
 RUN git clone https://github.com/Kitware/CMake.git -b v{{cookiecutter.cmake_build_version}} \
@@ -29,7 +21,7 @@ RUN git clone https://github.com/Kitware/CMake.git -b v{{cookiecutter.cmake_buil
 {%- endif %}
 
 ENV DEVUSER=${DEVUSER}
-RUN adduser --uid 1000 --disabled-password --gecos "" ${DEVUSER} \
+RUN adduser --uid ${DEVUID} --disabled-password --gecos "" ${DEVUSER} \
     && echo "${DEVUSER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${DEVUSER} {% if cookiecutter.docker_in_docker == "Yes" %}\{%- endif %}
 {%- if cookiecutter.docker_in_docker == "Yes" %}
     && groupadd docker && usermod -aG docker ${DEVUSER} && newgrp docker
