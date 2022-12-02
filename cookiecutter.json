@@ -8,7 +8,7 @@
     "os_is_wsl": ["Yes", "No"],
     "container_image": "ubuntu:focal",
     "additional_apt_packages": "",
-    "additional_python_package": "",
+    "additional_python_packages": "",
     "container_mount_ssh": ["Yes", "No"],
     "container_mount_xorg": ["Yes", "No"],
     "container_xorg_display": ":1",
