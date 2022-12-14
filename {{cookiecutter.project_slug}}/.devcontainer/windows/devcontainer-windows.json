@@ -1,16 +1,12 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.205.1/containers/cpp
 {
-	"name": "{{cookiecutter.project_name}} Development",
+	"name": "LiDARShooter Development",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { "DEVUSER": "devuser" }
 	},
-	{{%- if cookiecutter.setup_ros_variables == "Yes" %}}
-	"runArgs": ["--network=host",{{cookiecutter.docker_extra_runargs}}], // Mightn't work for Win
-	{{%- else %}
-	"runArgs": [{{cookiecutter.docker_extra_runargs}}]
-	{{%- endif %}
+	"runArgs": ["--network=host"], //["--gpus=all", "-e", "NVIDIA_DRIVER_CAPABILITIES=all"],
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
@@ -46,8 +42,11 @@
 		"hbenl.vscode-test-explorer",
 		"novaturion.cpp-classes-creator",
 		"matepek.vscode-catch2-test-adapter",
-		"Gruntfuggly.todo-tree",
-		"wayou.vscode-todo-highlight"
+		"go2sh.cmake-integration-vscode",
+		"mischelebuha.cmake-extension-pack",
+		"ms-iot.vscode-ros",
+		"wayou.vscode-todo-highlight",
+		"Gruntfuggly.todo-tree"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -60,35 +59,14 @@
 	"remoteUser": "devuser",
 
 	"remoteEnv": {
-	{%- if cookiecutter.container_mount_xorg == "Yes" %}
-	{%- if cookiecutter.os_is_wsl == "Yes" %}
-		"DISPLAY": "host.docker.internal:0.0" // Point to host machine's Xorg
-	{%- else %}
-		"DISPLAY": "${localEnv:DISPLAY}",
-		"XAUTHORITY": "/home/devuser/.Xauthority"
-	{%- endif %}
-	{%- endif %}
-	{%- if cookiecutter.setup_ros_variables == "Yes" %}
-		"ROS_IP": "{{cookiecutter.ros_ip_address}}",
-		"ROS_MASTER_URI": "{{cookiecutter.ros_master_uri}}",
-	{%- endif %}
+		"DISPLAY": "host.docker.internal:0.0",
+		"ROS_IP": "${localEnv:ROS_IP}",
+		"ROS_MASTER_URI": "${localEnv:ROS_MASTER_URI}",
 		"QT_AUTO_SCREEN_SCALE_FACTOR": "1"
 	},
 
 	// Maps the .ssh/ folder from your ${HOME} into /home/devuser/.ssh
 	"mounts": [
-	{%- if cookiecutter.container_mount_ssh == "Yes" %}
-		"source=${localEnv:HOME}${localEnv:USERPROFILE/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
-	{%- endif %}
-	{%- if cookiecutter.docker_in_docker == "Yes" %}
-		"source=//var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-	{%- endif %}
-	{%- if cookiecutter.container_mount_xorg == "Yes" %}
-	{%- if cookiecutter.os_is_wsl != "Yes" %}
-		// Assumes this is an Ubuntu/Debian image; generalize it
-		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
-		"source=${localEnv:XAUTHORITY},target=/home/devuser/.Xauthority,type=bind"
-	{%- endif %}
-	{%- endif %}
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached"
 	]
 }
