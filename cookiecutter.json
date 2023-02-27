@@ -14,6 +14,9 @@
     "container_mount_xorg": ["Yes", "No"],
     "container_xorg_display": ":1",
     "docker_in_docker": ["Yes", "No"],
+    "setup_ros_variables": ["Yes", "No"],
+    "ros_ip_address": "127.0.0.1", // This won't work if you're in a container; update it
+    "ros_master_uri": "127.0.0.1:11311", // This is only a default
     "cmake_build_version": "None",
     "docker_extra_runargs": "",
     "header_only": ["Yes", "No"],
