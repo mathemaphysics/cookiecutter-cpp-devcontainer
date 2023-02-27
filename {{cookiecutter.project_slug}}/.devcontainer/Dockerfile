@@ -10,8 +10,8 @@ RUN apt-get -y update \
     python3 python3-dev python3-pip \
  && python3 -m pip install cookiecutter sphinx breathe sphinx_rtd_theme
 
-{%- if cookiecutter.additional_apt_packages.split('|') | length > 0 %}
-RUN apt-get -y install --no-install-recommends {{cookiecutter.additional_apt_packages.replace('|', ' ')}} # TODO: Finish this
+{%- if cookiecutter.additional_apt_packages|length > 0 %}
+RUN apt-get -y install --no-install-recommends {{cookiecutter.additional_apt_packages|replace("|"," ")}} # TODO: Finish this
 {%- endif %}
 
 {%- if cookiecutter.cmake_build_version != "None" %}
