@@ -4,7 +4,7 @@
 	"name": "{{cookiecutter.project_name}} Development",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"args": { "DEVUSER": "devuser" }
+		"args": { "DEVUSER": "devuser", "DEVUID": "1000" }
 	},
 	"runArgs": [{{cookiecutter.docker_extra_runargs}}],
 
