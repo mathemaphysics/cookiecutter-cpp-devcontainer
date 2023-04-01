@@ -9,7 +9,7 @@
 	{%- if cookiecutter.setup_ros_variables == "Yes" %}
 	"runArgs": ["--network=host",{{cookiecutter.docker_extra_runargs}}], // Mightn't work for Win
 	{%- else %}
-	"runArgs": [{{cookiecutter.docker_extra_runargs}}]
+	"runArgs": [{{cookiecutter.docker_extra_runargs}}],
 	{%- endif %}
 
 	// Set *default* container specific settings.json values on container create.
