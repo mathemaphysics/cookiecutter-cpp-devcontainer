@@ -78,7 +78,7 @@
 	// Maps the .ssh/ folder from your ${HOME} into /home/devuser/.ssh
 	"mounts": [
 	{%- if cookiecutter.container_mount_ssh == "Yes" %}
-		"source=${localEnv:HOME}${localEnv:USERPROFILE/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
 	{%- endif %}
 	{%- if cookiecutter.docker_in_docker == "Yes" %}
 		"source=//var/run/docker.sock,target=/var/run/docker.sock,type=bind",
