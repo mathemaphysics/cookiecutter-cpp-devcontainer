@@ -6,7 +6,7 @@
 		"dockerfile": "Dockerfile",
 		"args": { "DEVUSER": "devuser" }
 	},
-	"runArgs": ["--network=host"], //["--gpus=all", "-e", "NVIDIA_DRIVER_CAPABILITIES=all"],
+	"runArgs": [], //["--network=host", "--gpus=all", "-e", "NVIDIA_DRIVER_CAPABILITIES=all"],
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
@@ -59,14 +59,15 @@
 	"remoteUser": "devuser",
 
 	"remoteEnv": {
-		"DISPLAY": "host.docker.internal:0.0",
-		"ROS_IP": "${localEnv:ROS_IP}",
-		"ROS_MASTER_URI": "${localEnv:ROS_MASTER_URI}",
-		"QT_AUTO_SCREEN_SCALE_FACTOR": "1"
+{%- if cookiecutter.container_mount_xorg == "Yes" %}
+		"DISPLAY": "host.docker.internal:0.0"
+{%- endif %}
 	},
 
 	// Maps the .ssh/ folder from your ${HOME} into /home/devuser/.ssh
 	"mounts": [
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached"
+{%- if cookiecutter.container_mount_ssh == "Yes" %}
+		"${localEnv:USERPROFILE}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached"
+{%- endif %}
 	]
 }

@@ -6,11 +6,7 @@
 		"dockerfile": "Dockerfile",
 		"args": { "DEVUSER": "devuser", "DEVUID": "1000" }
 	},
-	{%- if cookiecutter.setup_ros_variables == "Yes" %}
-	"runArgs": ["--network=host",{{cookiecutter.docker_extra_runargs}}], // Mightn't work for Win
-	{%- else %}
 	"runArgs": [{{cookiecutter.docker_extra_runargs}}],
-	{%- endif %}
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
@@ -68,11 +64,6 @@
 		"XAUTHORITY": "/home/devuser/.Xauthority"
 	{%- endif %}
 	{%- endif %}
-	{%- if cookiecutter.setup_ros_variables == "Yes" %}
-		"ROS_IP": "{{cookiecutter.ros_ip_address}}",
-		"ROS_MASTER_URI": "{{cookiecutter.ros_master_uri}}",
-	{%- endif %}
-		"QT_AUTO_SCREEN_SCALE_FACTOR": "1"
 	},
 
 	// Maps the .ssh/ folder from your ${HOME} into /home/devuser/.ssh

@@ -3,9 +3,13 @@ version: '3.4'
 services:
   devcontainer:
     environment:
-      - DISPLAY=:1
-      - XAUTHORITY=/home/devuser/.Xauthority
+      - DISPLAY=${LOCAL_DISPLAY}
+      - XAUTHORITY=${LOCAL_XAUTHORITY}
     volumes:
+{%- if cookiecutter.container_mount_ssh == "Yes" %}
       - ${HOME}/.ssh:/home/devuser/.ssh:ro
+{%- endif %}
+{%- if cookiecutter.container_mount_xorg == "Yes" %}
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${LOCAL_XAUTHORITY}:/home/devuser/.Xauthority:rw
+{%- endif %}
