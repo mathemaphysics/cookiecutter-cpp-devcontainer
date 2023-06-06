@@ -13,3 +13,6 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${LOCAL_XAUTHORITY}:/home/devuser/.Xauthority:rw
 {%- endif %}
+{%- if cookiecutter.docker_in_docker == "Yes" %}
+      - //var/run/docker.sock:/var/run/docker.sock:rw 
+{%- endif %}
